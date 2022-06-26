@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const thoughtsSchema = require('./thoughts.model');
 
 // Schema to create Users model
 const usersSchema = new Schema(
@@ -8,20 +7,26 @@ const usersSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      max_length: 280,
+      trim: true,
     },
     email: {
       type: mongoose.SchemaType.email,
       unique: true,
       required: true,
     },
-    thoughts: [thoughtsSchema],
+    thoughts: [
+      {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Thought',  
+      }
+    ],
     friends: [ this ],
   },
   {
     toJSON: {
       virtuals: true,
-    }
+    }, 
+    id: true,
   }
 );
 
