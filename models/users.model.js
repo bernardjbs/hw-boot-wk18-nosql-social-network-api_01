@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const { validateEmail } = require('../utils/helpers');
+const Thought = require('./thoughts.model');
 
 // Schema to create Users model
 const usersSchema = new Schema(
@@ -10,17 +12,23 @@ const usersSchema = new Schema(
       trim: true,
     },
     email: {
-      type: mongoose.SchemaType.email,
+      type: String,
       unique: true,
       required: true,
+      validate: [validateEmail, "invalid email"]
     },
     thoughts: [
       {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Thought',  
+        type: Schema.Types.ObjectId, 
+        ref: Thought,  
       }
     ],
-    friends: [ this ],
+    friends: [ 
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      }
+     ],
   },
   {
     toJSON: {

@@ -25,7 +25,7 @@ const thoughtsSchema = new Schema(
     },
     username: {
       type: String,
-      ref: 'User'
+      ref: 'user'
     },
     reactions: [reactionsSchema],
   },
